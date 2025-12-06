@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import styles from './UserTablePage.module.css';
 
 // Fake data: this would normally come from an API
 const USERS = [
@@ -31,6 +32,9 @@ function UserTable() {
   // - filter USERS by name OR email containing the search term (case-insensitive)
   // - use useMemo to avoid recomputing on every render if you like
   // const filteredUsers = useMemo(() => { ... }, [search]);
+  const filteredUsers = useMemo(() => {
+    return USERS.filter(user => user.name.toLowerCase().includes(search.toLowerCase()) || user.email.toLowerCase().includes(search.toLowerCase()));
+  }, [search]);
 
   // TODO (bonus): apply sorting to filteredUsers based on sortConfig
   // const sortedUsers = useMemo(() => { ... }, [filteredUsers, sortConfig]);
@@ -39,22 +43,36 @@ function UserTable() {
   // - figure out start index and end index based on currentPage and PAGE_SIZE
   // - slice the sortedUsers (or filteredUsers if you skip sorting)
   // const paginatedUsers = useMemo(() => { ... }, [sortedUsers, currentPage]);
+  const paginatedUsers = useMemo(() => {
+    return filteredUsers.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+  }, [filteredUsers, currentPage]);
 
   // TODO: derive totalPages from filteredUsers length
   // const totalPages = ...;
+  const totalPages = useMemo(() => {
+    return Math.ceil(filteredUsers.length / PAGE_SIZE);
+  }, [filteredUsers]);
 
   // TODO: handlers
   // - handleSearchChange
   // - goToNextPage (guard against going past totalPages)
   // - goToPrevPage (guard against going below 1)
   // - handleSort(columnKey) (bonus)
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+  const goToNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+  const goToPrevPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
 
   return (
     <div style={{ maxWidth: 800, margin: "2rem auto", fontFamily: "sans-serif" }}>
       <h1>User Table</h1>
 
       {/* Search input */}
-      {/* TODO: controlled input bound to `search` */}
       <div style={{ marginBottom: "1rem" }}>
         <label>
           Search by name or email:&nbsp;
@@ -63,16 +81,15 @@ function UserTable() {
       </div>
 
       {/* Table */}
-      <table
-        style={style.tableWrap
-        }
+      <div className={styles.tableWrap}>
+      <table className={styles.table}>
       >
         <thead>
           <tr>
             {/* TODO (bonus): click handlers for sorting by name/email */}
-            <th style={thStyle}>Name</th>
-            <th style={thStyle}>Email</th>
-            <th style={thStyle}>Role</th>
+            <th style={styles.thStyle}>Name</th>
+            <th style={styles.thStyle}>Email</th>
+            <th style={styles.thStyle}>Role</th>
           </tr>
         </thead>
         <tbody>
@@ -80,8 +97,21 @@ function UserTable() {
               - render paginatedUsers
               - "No results found" row when list is empty
           */}
+          {paginatedUsers.map((user) => (
+            <tr key={user.id}>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>{user.role}</td>
+            </tr>
+          ))}
+          {paginatedUsers.length === 0 && (
+            <tr>
+              <td colSpan="3">No results found</td>
+            </tr>
+          )}
         </tbody>
       </table>
+      </div>
 
       {/* Pagination controls */}
       <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
@@ -93,13 +123,4 @@ function UserTable() {
   );
 }
 
-const thStyle = {
-  borderBottom: "1px solid #ccc",
-  textAlign: "left",
-  padding: "0.5rem",
-  cursor: "pointer"
-};
-
-export default function App() {
-  return <UserTable />;
-}
+export default UserTable;
