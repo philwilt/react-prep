@@ -1,0 +1,147 @@
+.page {
+  width: min(1040px, 100%);
+  margin: 0 auto;
+  background: linear-gradient(145deg, #0f1421, #0a0c12);
+  border: 1px solid #1c2233;
+  border-radius: 18px;
+  padding: 32px 28px 36px;
+  color: #e8ecf1;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.4);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.kicker {
+  margin: 0 0 8px;
+  letter-spacing: 0.4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #7fffe1;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: -0.2px;
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  color: #a8b3c7;
+}
+
+.searchRow {
+  margin: 20px 0 12px;
+}
+
+.searchLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 600;
+  color: #c7d2e7;
+}
+
+.searchInput {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #1f2b3a;
+  background: #0c111b;
+  color: #e8ecf1;
+  outline: none;
+}
+
+.searchInput:focus {
+  border-color: #3df2ca;
+  box-shadow: 0 0 0 3px rgba(61, 242, 202, 0.18);
+}
+
+.tableWrap {
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid #1c2233;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #0c111b;
+}
+
+.th {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #1c2233;
+  color: #c7d2e7;
+  cursor: pointer;
+  user-select: none;
+}
+
+.td {
+  padding: 12px;
+  border-bottom: 1px solid #121725;
+  color: #e8ecf1;
+}
+
+.empty {
+  padding: 20px;
+  text-align: center;
+  color: #93a3bd;
+}
+
+.sort {
+  margin-left: 6px;
+  color: #7fffe1;
+  font-size: 12px;
+}
+
+.sortMuted {
+  color: #4e5a73;
+}
+
+.pagination {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.pageButton {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #1f2b3a;
+  background: #0c111b;
+  color: #e8ecf1;
+  cursor: pointer;
+  transition: background 120ms ease, transform 120ms ease;
+}
+
+.pageButton:hover:not(:disabled) {
+  background: rgba(127, 255, 225, 0.08);
+  transform: translateY(-1px);
+}
+
+.pageButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pageIndicator {
+  color: #c7d2e7;
+}
+
+@media (max-width: 720px) {
+  .head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .page {
+    padding: 24px 20px 28px;
+  }
+}

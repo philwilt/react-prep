@@ -1,0 +1,33 @@
+.button {
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #3df2ca, #11c8f1);
+  color: #04101a;
+  padding: 12px 14px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+}
+
+.button:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(17, 200, 241, 0.25);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.ghost {
+  background: transparent;
+  color: #7fffe1;
+  border: 1px solid #1f2b3a;
+  box-shadow: none;
+}
+
+.ghost:hover {
+  filter: none;
+  background: rgba(127, 255, 225, 0.08);
+}
