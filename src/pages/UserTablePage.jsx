@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import styles from "./UserTablePage.module.css";
 
 // Fake data: this would normally come from an API
@@ -22,7 +22,7 @@ function UserTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState({
     key: "name",
-    direction: "dsc",
+    direction: "desc",
   });
 
   const filteredUsers = useMemo(() => {
@@ -43,7 +43,9 @@ function UserTable() {
     const sortedUsers = [...filteredUsers].sort((a, b) => {
       if (sortValue(a, sortConfig.key) === sortValue(b, sortConfig.key))
         return 0;
-      return sortValue(a) > sortValue(b) ? 1 : -1;
+      return sortValue(a, sortConfig.key) > sortValue(b, sortConfig.key)
+        ? 1
+        : -1;
     });
     return sortConfig.direction === "asc" ? sortedUsers : sortedUsers.reverse();
   }, [filteredUsers, sortConfig]);
@@ -72,8 +74,6 @@ function UserTable() {
     setCurrentPage(1);
   }, [sortConfig]);
 
-  console.log("jeys", USERS[0].key);
-
   return (
     <div
       style={{ maxWidth: 800, margin: "2rem auto", fontFamily: "sans-serif" }}
@@ -92,7 +92,7 @@ function UserTable() {
             <tr>
               {["name", "email", "role"].map((key) => {
                 return (
-                  <th key={key} style={styles.thStyle}>
+                  <th key={key} className={styles.th}>
                     <button
                       onClick={() => {
                         setSortConfig({
@@ -100,15 +100,15 @@ function UserTable() {
                           key,
                           direction:
                             sortConfig.key === key &&
-                            sortConfig.direction === "dsc"
+                            sortConfig.direction === "desc"
                               ? "asc"
-                              : "dsc",
+                              : "desc",
                         });
                       }}
                     >
                       {key}
                       {sortConfig.key === key &&
-                        (sortConfig.direction === "dsc" ? " v" : " ^")}
+                        (sortConfig.direction === "desc" ? " v" : " ^")}
                     </button>
                   </th>
                 );
